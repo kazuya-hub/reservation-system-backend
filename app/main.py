@@ -1,11 +1,13 @@
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from .core.db import create_db_and_tables
 
+from .routers.masters import router as masters_router
 from .routers.auth import router as auth_router
 from .routers.users import router as users_router
+from .routers.lessons import router as lessons_router
 
 
 app = FastAPI()
@@ -19,10 +21,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# @app.middleware("http")
-# async def printout(request: Request, call_next):
-#     print(dict(request))
-#     return await call_next(request)
+@app.middleware("http")
+async def printout(request: Request, call_next):
+    # リクエストの内容をログに出力
+    print(f"Request: {request.method} {request.url}")
+    print(f"Headers: {request.headers}")
+    print(f"Body: {await request.body()}")
+    return await call_next(request)
 
 
 @app.on_event("startup")
@@ -30,5 +35,7 @@ def on_startup():
     create_db_and_tables()
 
 
+app.include_router(masters_router)
 app.include_router(auth_router)
 app.include_router(users_router)
+app.include_router(lessons_router)

@@ -42,7 +42,8 @@ async def register_request(
     session: SessionDep,
 ):
     token = request_registration(session, form_data.email)
-    send_email_verification(form_data.email, token)
+    verification_url = send_email_verification(form_data.email, token)
+    return {"verification_url": verification_url}
 
 @router.post("/register-complete-request")
 async def register_complete_request(

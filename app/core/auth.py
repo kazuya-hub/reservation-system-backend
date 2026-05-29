@@ -63,6 +63,7 @@ def send_email_verification(email: str, token: str) -> None:
 			if SMTP_USER and SMTP_PASSWORD:
 				smtp.login(SMTP_USER, SMTP_PASSWORD)
 			smtp.send_message(message)
+			return verification_url
 	except Exception as exc:
 		print(f"failed to send email... verification url: {verification_url}")
 		raise RuntimeError("failed to send email") from exc

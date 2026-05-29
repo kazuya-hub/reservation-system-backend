@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from ..core.auth import send_email_verification
 from ..dependencies.db import SessionDep
 from ..schemas.auth import Token
-from ..services.auth import issue_access_token, request_registration, complete_registration
+from ..services.auth import issue_access_token, request_registration, complete_registration, is_public_user_id_available
 
 router = APIRouter()
 
@@ -62,3 +62,19 @@ async def register_complete_request(
         )
 
     return {"message": "registration complete"}
+
+
+class PublicUserIdAvailabilityRequest(BaseModel):
+    public_user_id: str
+
+class PublicUserIdAvailabilityResponse(BaseModel):
+    available: bool
+
+@router.post("/public-user-id/availability")
+async def check_public_user_id_availability(
+    form_data: PublicUserIdAvailabilityRequest,
+    session: SessionDep,
+):
+    public_user_id = form_data.public_user_id
+    is_available = is_public_user_id_available(session, public_user_id)
+    return PublicUserIdAvailabilityResponse(available=is_available)

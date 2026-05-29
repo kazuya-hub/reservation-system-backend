@@ -116,3 +116,6 @@ def complete_registration(session: Session, token: str, public_user_id: str, pas
 
     session.commit()
     
+
+def is_public_user_id_available(session: Session, public_user_id: str) -> bool:
+    return get_user_by_public_id(session, public_user_id) is None

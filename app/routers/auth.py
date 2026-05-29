@@ -45,7 +45,7 @@ async def register_request(
     try:
         verification_url = send_email_verification(form_data.email, token)
     except RuntimeError:
-        return {"verification_url": verification_url}
+        return {"token": token}
 
 @router.post("/register-complete-request")
 async def register_complete_request(

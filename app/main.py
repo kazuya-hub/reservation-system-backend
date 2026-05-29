@@ -34,7 +34,8 @@ async def printout(request: Request, call_next):
 
 @app.on_event("startup")
 def on_startup():
-    create_db_and_tables()
+    # create_db_and_tables()
+    pass
 
 
 app.include_router(masters_router)

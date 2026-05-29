@@ -8,6 +8,7 @@ from .routers.masters import router as masters_router
 from .routers.auth import router as auth_router
 from .routers.users import router as users_router
 from .routers.lessons import router as lessons_router
+from .routers.reservations import router as reservations_router
 
 
 app = FastAPI()
@@ -39,3 +40,4 @@ app.include_router(masters_router)
 app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(lessons_router)
+app.include_router(reservations_router)

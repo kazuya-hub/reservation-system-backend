@@ -9,6 +9,7 @@ class LessonBase(SQLModel):
     lesson_series_id: int = Field(foreign_key="m_lesson_series.lesson_series_id")
     studio_id: int = Field(foreign_key="m_studios.studio_id")
     teacher_id: int = Field(foreign_key="m_teachers.teacher_id")
+    max_reservations: int | None = None
 
 
 class Lesson(LessonBase, table=True):

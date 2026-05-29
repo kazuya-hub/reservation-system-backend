@@ -18,31 +18,6 @@ class UserUpdate(SQLModel):
     email: str | None = None
 
 
-class LessonCreate(SQLModel):
-    start_at: datetime
-    end_at: datetime
-    lesson_series_id: int
-    studio_id: int
-    teacher_id: int
-
-
-class LessonRead(SQLModel):
-    lesson_id: int
-    start_at: datetime
-    end_at: datetime
-    lesson_series_id: int
-    studio_id: int
-    teacher_id: int
-
-
-class LessonUpdate(SQLModel):
-    start_at: datetime | None = None
-    end_at: datetime | None = None
-    lesson_series_id: int | None = None
-    studio_id: int | None = None
-    teacher_id: int | None = None
-
-
 class LessonSeriesCreate(SQLModel):
     name: str
 

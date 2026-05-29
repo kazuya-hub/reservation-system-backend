@@ -15,7 +15,8 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173", # vueのデフォルト
+        "http://localhost:5173", # vueのデフォルト,
+        "https://orange-glacier-0f64ab200.7.azurestaticapps.net"
     ],
     allow_credentials=True,
     allow_methods=["*"],

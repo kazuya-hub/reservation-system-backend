@@ -1,4 +1,6 @@
 
+import os
+
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -11,13 +13,23 @@ from .routers.lessons import router as lessons_router
 from .routers.reservations import router as reservations_router
 
 
+def _get_allowed_origins() -> list[str]:
+    # Comma separated origins from env, e.g. "https://foo.azurestaticapps.net,https://bar.example.com"
+    raw = os.getenv("CORS_ALLOWED_ORIGINS", "")
+    origins = [origin.strip() for origin in raw.split(",") if origin.strip()]
+
+    if "http://localhost:5173" not in origins:
+        origins.append("http://localhost:5173")
+
+    return origins
+
+
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173", # vueのデフォルト,
-        "https://orange-glacier-0f64ab200.7.azurestaticapps.net"
-    ],
+    allow_origins=_get_allowed_origins(),
+    # Azure Static Web Apps のプレビューURLや再作成時のURL変更に追従する
+    allow_origin_regex=r"https://.*\.azurestaticapps\.net",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

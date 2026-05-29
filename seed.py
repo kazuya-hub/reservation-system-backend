@@ -2,15 +2,13 @@ from datetime import datetime, timezone
 
 from sqlmodel import SQLModel, Session
 
-from main import (
-    User,
-    Lesson,
-    LessonSeries,
-    Reservation,
-    Studio,
-    Teacher,
-    engine,
-)
+from app.core.db import engine
+
+# SQLModel.metadata.create_all の対象になるよう、使用しなくても全モデルをimportする
+from app.models.masters import LessonSeries, Studio, Teacher
+from app.models.lessons import Lesson, Reservation
+from app.models.users import User
+from app.models.email_verifications import EmailVerification
 
 
 def reset_database() -> None:

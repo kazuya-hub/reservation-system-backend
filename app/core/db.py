@@ -12,6 +12,7 @@ def create_db_and_tables():
     from ..models import masters  # noqa: F401
     from ..models import users  # noqa: F401
     from ..models import lessons  # noqa: F401
+    from ..models import email_verifications  # noqa: F401
 
     SQLModel.metadata.create_all(engine)
 
